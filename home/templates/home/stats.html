@@ -1,0 +1,136 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* The navigation bar */
+        body{
+            background: #f8f8f8;
+        }
+        #navbar {
+            overflow: hidden;
+            background-color: #3875d7;
+            position: fixed; /* Set the navbar to fixed position */
+            left: 0;
+            top: 0; /* Position the navbar at the top of the page */
+            width: 100%; /* Full width */
+        }
+
+        /* Links inside the navbar */
+        #navbar a {
+            float: right;
+            display: block;
+            color: #f8f8f8;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+        }
+
+        /* Change background on mouse-over */
+        #navbar a:hover {
+            background: #ddd;
+            color: #81d4fa;
+        }
+
+        .regular-season-teams {
+            margin: 50px auto auto auto;
+        }
+
+        .stat-list {
+            border: 1px dot-dash #81d4fa;
+        }
+
+        .game-container {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background-color: #81d4fa;
+        }
+
+        .scrollable-div {
+            height: 400px;
+            overflow-y: scroll;
+            }
+
+    </style>
+    <meta charset="UTF-8">
+    <meta name="home">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+
+    <title>{% block title %}bOracle{% endblock title %}</title>
+</head>
+<body>
+    <div id="navbar">
+        <a href="{% url 'index' %}">Home</a>
+        <a href="/bet/">Bets</a>
+        <a href="{% url 'stats' %}">Stats</a>
+    </div>
+
+    <h2 class="regular-season-teams">Regular Season Standings</h2>
+
+    <div class="game-container">
+        <div><strong>West</strong></div>
+        <div><strong>East</strong></div>
+    </div>
+    <div class="game-container">
+        <table>
+            <tr>
+                {% for col in teamHeader %}
+                    <td><strong>{{ col }}</strong></td>
+                {% endfor %}
+            </tr>
+            {% for team in regStandingsWest %}
+                <tr>
+                    {% for x in team %}
+                        <td>{{ x }}</td>
+                    {% endfor %}
+                </tr>
+            {% empty %}
+                <div>Error: reload</div>
+            {% endfor %}
+        </table>
+        <table>
+            <tr>
+                {% for col in teamHeader %}
+                    <td><strong>{{ col }}</strong></td>
+                {% endfor %}
+            </tr>
+            {% for team in regStandingsEast %}
+                <tr>
+                    {% for x in team %}
+                        <td>{{ x }}</td>
+                    {% endfor %}
+                </tr>
+            {% empty %}
+                <div>Error: reload</div>
+            {% endfor %}
+        </table>
+    </div>
+
+    <h2 class="regular-season-teams">Regular Season Stat Leaders</h2>
+    <div class="scrollable-div">
+        <table>
+            <tr>
+                {% for col in statHeader %}
+                    <td><strong>{{ col }}</strong></td>
+                {% endfor %}
+            </tr>
+            {% for player in statLeaders %}
+                <tr>
+                    {% for x in player %}
+                        <td>{{ x }}</td>
+                    {% endfor %}
+                </tr>
+            {% empty %}
+                <div>Error: reload</div>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>
